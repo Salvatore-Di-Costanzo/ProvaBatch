@@ -20,7 +20,7 @@ public class BatchReader implements ItemReader<Utenti> {
     @Autowired
     private UtentiService utentiService;
 
-    private List<Utenti> utenti = new ArrayList<>();
+    private static List<Utenti> utenti = new ArrayList<>();
 
     private static int index = 0;
 
@@ -28,15 +28,13 @@ public class BatchReader implements ItemReader<Utenti> {
     public Utenti read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
         utenti = utentiService.getAllUtenti();
-
+        
         if ( index == utenti.size() ) {
             index = 0;
             return null;
         }
 
-        index++;
-
-        return utentiService.getUtenteById(index);
+        return utenti.get(index++);
 
     }
 }

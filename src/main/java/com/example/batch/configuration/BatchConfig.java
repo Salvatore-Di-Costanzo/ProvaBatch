@@ -69,6 +69,7 @@ public class BatchConfig {
         return stepBuilderFactory.get("provaDbReader")
                 .<Utenti,Utenti>chunk(2)
                 .reader(batchReader())
+                .processor(batchProcessor())
                 .writer(batchWriter())
                 .build();
     }
@@ -77,6 +78,9 @@ public class BatchConfig {
     public BatchReader batchReader(){
         return new BatchReader();
     }
+
+    @Bean
+    public BatchProcessor batchProcessor() { return new BatchProcessor(); }
 
     @Bean
     public BatchWriter batchWriter(){
