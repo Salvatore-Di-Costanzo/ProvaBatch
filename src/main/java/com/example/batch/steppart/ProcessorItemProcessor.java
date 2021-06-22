@@ -1,10 +1,15 @@
 package com.example.batch.steppart;
 
-import javax.batch.api.chunk.ItemProcessor;
+import com.example.batch.model.Utenti;
+import org.springframework.batch.item.ItemProcessor;
 
-public class ProcessorItemProcessor implements ItemProcessor {
+
+public class ProcessorItemProcessor implements ItemProcessor<Utenti,Utenti> {
+
+
     @Override
-    public Object processItem(Object o) throws Exception {
-        return null;
+    public Utenti process(Utenti o) throws Exception {
+        o.setNome("Giovannone");
+        return o;
     }
 }

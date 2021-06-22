@@ -1,7 +1,6 @@
 package com.example.batch.configuration;
 
 import com.example.batch.model.Utenti;
-import com.example.batch.service.UtentiService;
 import com.example.batch.steppart.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -13,28 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
 @Slf4j
 public class BatchConfig {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
-    private final UtentiService utentiService;
 
     @Autowired
-    public BatchConfig(JobBuilderFactory jobBuilderFactory,StepBuilderFactory stepBuilderFactory,UtentiService utentiService){
+    public BatchConfig(JobBuilderFactory jobBuilderFactory,StepBuilderFactory stepBuilderFactory){
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
-        this.utentiService = utentiService;
     }
 
     @Bean
     public Job job1(){
         return this.jobBuilderFactory.get("Job")
-                .start(step1())
-                .next(step2())
+                .start(step3())
                 .build();
     }
 
@@ -55,6 +49,7 @@ public class BatchConfig {
         return this.stepBuilderFactory.get("Step3")
                 .<Utenti,Utenti>chunk(10)
                 .reader(itemReader2())
+                .processor(itemProcessor2())
                 .writer(itemWriter2())
                 .build();
     }
@@ -68,6 +63,9 @@ public class BatchConfig {
     public WriterItemWriter itemWriter2(){
         return new WriterItemWriter();
     }
+
+    @Bean
+    public ProcessorItemProcessor itemProcessor2(){ return new ProcessorItemProcessor(); }
 
     @Bean
     public ProcessorItemProcessor processorItemProcessor2(){
