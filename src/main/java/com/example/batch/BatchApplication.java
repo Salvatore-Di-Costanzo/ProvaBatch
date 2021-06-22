@@ -40,7 +40,7 @@ public class BatchApplication {
 //		| | | | +------------------ day of week: 0 - 6 (Sunday=0)
 //		| | | +-------------------- month:  1 - 12
 //		| |	+---------------------- day:  1 - 31
-//		|	+------------------------ hour:  0 - 23
+//		| +------------------------ hour:  0 - 23
 //		+-------------------------- minute:  0 - 59
 	@Scheduled(cron = "1 * * * * ?")
 	public void perform() throws Exception{
