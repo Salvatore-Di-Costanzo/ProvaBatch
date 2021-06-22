@@ -2,6 +2,8 @@ package com.example.batch.steppart;
 
 import com.example.batch.model.Utenti;
 import com.example.batch.service.UtentiService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class BatchReader implements ItemReader<Utenti> {
 
     @Autowired
@@ -25,8 +29,10 @@ public class BatchReader implements ItemReader<Utenti> {
 
         utenti = utentiService.getAllUtenti();
 
-        if ( index == utenti.size() )
+        if ( index == utenti.size() ) {
+            index = 0;
             return null;
+        }
 
         index++;
 

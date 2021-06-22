@@ -67,7 +67,7 @@ public class BatchConfig {
     @Bean
     public Step step4(){
         return stepBuilderFactory.get("provaDbReader")
-                .<Utenti,Utenti>chunk(4)
+                .<Utenti,Utenti>chunk(2)
                 .reader(batchReader())
                 .writer(batchWriter())
                 .build();
