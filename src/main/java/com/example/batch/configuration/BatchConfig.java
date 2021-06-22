@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+
 @Configuration
 @Slf4j
 public class BatchConfig {
@@ -25,10 +27,16 @@ public class BatchConfig {
         this.stepBuilderFactory = stepBuilderFactory;
     }
 
-    @Bean
+    /*@Bean
     public Job job1(){
         return this.jobBuilderFactory.get("Job")
                 .start(step3())
+                .build();
+    }*/
+    @Bean
+    public Job job2(){
+        return jobBuilderFactory.get("provaJob")
+                .start(step4())
                 .build();
     }
 
@@ -53,6 +61,29 @@ public class BatchConfig {
                 .writer(itemWriter2())
                 .build();
     }
+
+
+
+    @Bean
+    public Step step4(){
+        return stepBuilderFactory.get("provaDbReader")
+                .<Utenti,Utenti>chunk(4)
+                .reader(batchReader())
+                .writer(batchWriter())
+                .build();
+    }
+
+    @Bean
+    public BatchReader batchReader(){
+        return new BatchReader();
+    }
+
+    @Bean
+    public BatchWriter batchWriter(){
+        return new BatchWriter();
+    }
+
+
 
     @Bean
     public ReaderItemReader itemReader2(){

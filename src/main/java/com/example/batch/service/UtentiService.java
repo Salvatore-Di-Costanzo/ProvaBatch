@@ -18,11 +18,7 @@ public class UtentiService {
     }
 
     public List<Utenti> getAllUtenti(){
-        return utentiRepository.trova();
-    }
-
-    public List<Utenti> getUtentibyName(String name){
-        return utentiRepository.getUtentiByNome(name);
+        return utentiRepository.findAll();
     }
 
     public Utenti getUtenteById (int id){
